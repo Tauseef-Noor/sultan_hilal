@@ -1,51 +1,18 @@
-name: Build Windows Application
+name: Build
 
-on:
-  push:
-    branches: [ main ]
-    paths-ignore:
-      - '**.md'
-      - '.gitignore'
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: |
-        npm install
-      
-    - name: Build Windows Application
-      run: |
-        npm run build-win
-      env:
-        CI: false
-      
-    - name: Upload Setup Executable
-      uses: actions/upload-artifact@v3
-      with:
-        name: Sultan-Hilal-Transport-Setup
-        path: dist/*.exe
-        retention-days: 5
-
-    - name: Create Release
-      if: github.ref == 'refs/heads/main'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: dist/*.exe
-        name: Latest Build
-        tag_name: v${{ github.run_number }}
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: npm install
+      - run: npm run build-win
+      - uses: actions/upload-artifact@v2
+        with:
+          name: windows-build
+          path: dist
