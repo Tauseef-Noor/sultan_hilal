@@ -1,6 +1,6 @@
 name: Build
 
-on: [push]
+on: push
 
 jobs:
   build:
@@ -12,7 +12,10 @@ jobs:
           node-version: '16.x'
       - run: npm install
       - run: npm run build-win
-      - uses: actions/upload-artifact@v2
+      - run: |
+          mkdir artifact
+          xcopy dist\*.exe artifact\ /Y
+      - uses: actions/upload-artifact@v1.0.0
         with:
           name: windows-build
-          path: dist
+          path: artifact
