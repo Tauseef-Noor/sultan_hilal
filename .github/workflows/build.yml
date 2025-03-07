@@ -6,16 +6,16 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
       - run: npm install
       - run: npm run build-win
-      - run: |
-          mkdir artifact
-          xcopy dist\*.exe artifact\ /Y
-      - uses: actions/upload-artifact@v1.0.0
+      - run: mkdir dist-upload
+      - run: copy dist\*.exe dist-upload\
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v1
         with:
           name: windows-build
-          path: artifact
+          path: dist-upload
