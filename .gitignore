@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Database
+vehicles.db
+
+# System files
+.DS_Store
+*.log
+
+# IDE files
+.idea/
+.vscode/

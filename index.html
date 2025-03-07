@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultan Hilal Transport - Vehicle Management</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+            font-size: 1.4rem;
+        }
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.5);
+            padding: 0.5rem;
+        }
+        .navbar-toggler:focus {
+            box-shadow: none;
+            border-color: white;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            margin: 0.3rem 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255,255,255,0.1);
+        }
+        .nav-link.active {
+            background-color: var(--secondary-color);
+            color: white !important;
+        }
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: var(--primary-color);
+                padding: 1rem;
+                border-radius: 8px;
+                margin-top: 1rem;
+            }
+            .nav-link {
+                padding: 0.8rem 1rem;
+                margin: 0.2rem 0;
+            }
+        }
+        .card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        .table {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .table td {
+            padding: 0.5rem;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-responsive {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .table {
+                font-size: 0.85rem;
+            }
+            .table thead th {
+                font-size: 0.85rem;
+            }
+        }
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            padding: 0.6rem 1rem;
+        }
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        .form-label {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .form-control {
+                font-size: 1rem;
+                padding: 0.5rem 0.8rem;
+            }
+        }
+        .hidden {
+            display: none !important;
+        }
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand">🚗 Sultan Hilal Transport</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto text-center">
+                    <a class="nav-link active" href="javascript:void(0)" onclick="navigateTo('home')">Home</a>
+                    <a class="nav-link" href="javascript:void(0)" onclick="navigateTo('reserve')">Reserve Vehicle</a>
+                    <a class="nav-link" href="javascript:void(0)" onclick="navigateTo('pending')">Pending Payments</a>
+                    <a class="nav-link" href="javascript:void(0)" onclick="navigateTo('records')">Vehicle Records</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Home Page -->
+        <div id="home" class="page">
+            <h2>Welcome to Sultan Hilal Transport Vehicle Management System</h2>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Reserve Vehicle</h5>
+                            <p class="card-text">Create new vehicle reservations and manage existing ones.</p>
+                            <button class="btn btn-primary" onclick="navigateTo('reserve')">Go to Reservations</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Pending Payments</h5>
+                            <p class="card-text">View and manage pending payments for vehicles.</p>
+                            <button class="btn btn-primary" onclick="navigateTo('pending')">View Pending Payments</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Vehicle Records</h5>
+                            <p class="card-text">Access complete vehicle rental history and payment records.</p>
+                            <button class="btn btn-primary" onclick="navigateTo('records')">View Records</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reserve Vehicle Page -->
+        <div id="reserve" class="page hidden">
+            <h2>Reserve Vehicle</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form id="reservationForm" class="mb-4">
+                        <div class="mb-3">
+                            <label class="form-label">Vehicle Number</label>
+                            <input type="text" class="form-control" id="vehicleNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Company</label>
+                            <input type="text" class="form-control" id="company" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Start Date</label>
+                            <input type="datetime-local" class="form-control" id="startDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">End Date</label>
+                            <input type="datetime-local" class="form-control" id="endDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price per Hour</label>
+                            <input type="number" class="form-control" id="pricePerHour" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Vehicle Type</label>
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="vehicleType" value="Company" checked>
+                                    <label class="form-check-label">Company</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="vehicleType" value="External">
+                                    <label class="form-check-label">External</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Reserve Vehicle</button>
+                    </form>
+                </div>
+            </div>
+            <h3>Current Reservations</h3>
+            <div class="table-responsive mt-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Company</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Vehicle Type</th>
+                            <th>Price/Hour</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Vehicle Records Page -->
+        <div id="records" class="page hidden">
+            <h2>Vehicle Records</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 11%">Vehicle Number</th>
+                            <th style="width: 11%">Company</th>
+                            <th style="width: 12%">Start Date</th>
+                            <th style="width: 12%">End Date</th>
+                            <th style="width: 10%">Total Price</th>
+                            <th style="width: 10%">Total + VAT</th>
+                            <th style="width: 10%">Expenses</th>
+                            <th style="width: 12%">Profit</th>
+                            <th style="width: 12%">Payment Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vehicleRecordsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Return Vehicle Modal -->
+        <div class="modal fade" id="returnModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Return Vehicle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="returnForm">
+                            <input type="hidden" id="returnReservationId">
+                            <div class="mb-3">
+                                <label class="form-label">Total Hours</label>
+                                <input type="number" class="form-control" id="totalHours" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Vehicle Expenses</label>
+                                <input type="number" class="form-control" id="vehicleExpenses" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Expected Payment Date</label>
+                                <input type="date" class="form-control" id="expectedPaymentDate" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="returnVehicle()">Return Vehicle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Payments Page -->
+        <div id="pending" class="page hidden">
+            <h2>Pending Payments</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Company</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Total Hours</th>
+                            <th>Price/Hour</th>
+                            <th>Total Price</th>
+                            <th>Total + VAT</th>
+                            <th>Expenses</th>
+                            <th>Expected Payment</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingPaymentsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Vehicle Records Page -->
+        <div id="records" class="page hidden">
+            <h2>Vehicle Records</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Number</th>
+                            <th>Company</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Total Price</th>
+                            <th>Total + VAT</th>
+                            <th>Expenses</th>
+                            <th>Payment Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vehicleRecordsTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="renderer.js"></script>
+</body>
+</html>
